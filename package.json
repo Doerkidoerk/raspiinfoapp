@@ -1,0 +1,13 @@
+{
+"name": "pi-stats-webapp",
+"version": "1.0.0",
+"description": "Raspberry Pi metrics webapp (no Python)",
+"main": "server.js",
+"type": "module",
+"scripts": {
+"start": "node server.js"
+},
+"dependencies": {
+"express": "^4.19.2"
+}
+}
