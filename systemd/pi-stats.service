@@ -1,0 +1,15 @@
+[Unit]
+Description=Pi Stats Webapp (Node)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/pi-stats
+ExecStart=/usr/bin/node /opt/pi-stats/server.js
+Restart=always
+User=www-data
+Group=www-data
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
