@@ -1,0 +1,50 @@
+<!doctype html>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Raspberry Pi — Systemstatus</title>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<main class="container">
+<header>
+<h1>Raspberry Pi • Systemstatus</h1>
+<div id="updated" class="muted">lädt…</div>
+</header>
+
+<section class="grid">
+<div class="card">
+<h2>Temperatur</h2>
+<div class="value"><span id="temp">—</span> <span class="unit">°C</span></div>
+<div class="bar"><div id="tempBar"></div></div>
+</div>
+
+<div class="card">
+<h2>CPU‑Takt</h2>
+<div class="value"><span id="freq">—</span> <span class="unit">MHz</span></div>
+<div class="bar"><div id="freqBar"></div></div>
+</div>
+
+<div class="card">
+<h2>CPU‑Auslastung</h2>
+<div class="value"><span id="cpu">—</span> <span class="unit">%</span></div>
+<div class="bar"><div id="cpuBar"></div></div>
+</div>
+
+<div class="card">
+<h2>RAM‑Auslastung</h2>
+<div class="value"><span id="ram">—</span> <span class="unit">%</span></div>
+<div class="bar"><div id="ramBar"></div></div>
+<div id="ramText" class="muted small">—</div>
+</div>
+</section>
+
+<footer>
+<span id="host">–</span>
+<span>•</span>
+<span id="uptime">–</span>
+</footer>
+</main>
+
+<script src="/app.js" defer></script>
+</body>
+</html>
