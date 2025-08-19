@@ -1,46 +1,36 @@
-root {
-
-function formatUptime(sec) {
-const d = Math.floor(sec / 86400);
-const h = Math.floor((sec % 86400) / 3600);
-const m = Math.floor((sec % 3600) / 60);
-return `${d} Tage ${h} h ${m} min`;
+:root {
+--bg: #0b1020;
+--panel: #121a33;
+--text: #e7ecff;
+--muted: #9aa4c7;
+--accent: #7aa2ff;
+--ok: #59d68c;
+--warn: #ffd166;
+--danger: #ff6b6b;
 }
-
-function tempClass(t) {
-if (t >= 75) return 'hot';
-if (t >= 60) return 'warm';
-return 'cool';
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+margin: 0; background: radial-gradient(1200px 600px at 20% -10%, #172246 0%, #0b1020 50%);
+font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+color: var(--text);
 }
+.container { max-width: 980px; margin: 0 auto; padding: 24px; }
+header { display:flex; align-items: baseline; gap: 16px; }
+h1 { margin: 0; font-size: clamp(20px, 2.6vw, 32px); font-weight: 700; letter-spacing: 0.3px; }
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 16px; }
+.card { background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); backdrop-filter: blur(6px); }
+.card h2 { margin: 0 0 8px; font-size: 14px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+.value { font-size: 36px; font-weight: 700; display: flex; align-items: baseline; gap: 6px; }
+.unit { font-size: 16px; color: var(--muted); font-weight: 500; }
+.bar { height: 10px; background: rgba(255,255,255,0.06); border-radius: 999px; overflow: hidden; margin-top: 10px; }
+.bar > div { height: 100%; width: 0%; background: var(--accent); transition: width 300ms ease; }
 
-async function tick() {
-try {
-const res = await fetch('/api/stats', { cache: 'no-store' });
-const s = await res.json();
+footer { margin-top: 18px; display:flex; gap:10px; align-items:center; color: var(--muted); font-size: 13px; }
 
-document.body.classList.remove('hot','warm','cool');
-document.body.classList.add(tempClass(s.tempC));
-
-els.temp.textContent = s.tempC.toFixed(1);
-els.cpu.textContent = s.cpuUsagePct.toFixed(1);
-els.freq.textContent = s.cpuFreqMHz.toFixed(0);
-els.ram.textContent = s.ramUsedPct.toFixed(1);
-
-els.tempBar.style.width = Math.min(100, (s.tempC / 85) * 100) + '%';
-els.cpuBar.style.width = Math.min(100, s.cpuUsagePct) + '%';
-// Normalize freq bar to 0..2000 MHz typical Pi 4 range
-els.freqBar.style.width = Math.min(100, (s.cpuFreqMHz / 2000) * 100) + '%';
-els.ramBar.style.width = Math.min(100, s.ramUsedPct) + '%';
-
-els.ramText.textContent = `${formatBytes(s.ram.usedKB)} von ${formatBytes(s.ram.totalKB)}`;
-els.updated.textContent = `Aktualisiert: ${new Date(s.updatedAt).toLocaleTimeString()}`;
-els.host.textContent = s.hostname;
-els.uptime.textContent = `Uptime: ${formatUptime(s.uptimeSec)}`;
-} catch (e) {
-els.updated.textContent = 'Fehler beim Laden – erneut versuchen…';
-console.error(e);
-}
-}
-
-setInterval(tick, 2000);
-window.addEventListener('load', tick);
+/* Dynamic accent based on temperature */
+.hot { --accent: var(--danger); }
+.warm { --accent: var(--warn); }
+.cool { --accent: var(--ok); }
